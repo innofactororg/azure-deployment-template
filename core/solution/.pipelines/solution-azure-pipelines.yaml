@@ -1,0 +1,42 @@
+name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
+
+trigger: none
+# trigger: 
+#   branches:
+#     include: 
+#     - main
+#     - uat
+#     - tst
+#     - dev
+#     exclude:
+#     - feature/*
+
+pr:
+  autoCancel: true
+  drafts: false
+
+variables:
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/dev') }}:
+    - template: environments/dev.yaml
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/tst') }}:
+    - template: environments/test.yaml
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/uat') }}:
+    - template: environments/uat.yaml
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    - template: environments/prod.yaml
+
+resources:
+  repositories:
+  - repository: templates # can be anything, is later used in the @ statement
+    type: git # git = Azure DevOps / #github = GitHub
+    name:  Kod-IaC-ALZ/ci-cd-workflows # ProjectName/RepoName
+
+stages:
+  - stage: plan
+    jobs:
+      - template: plan.yaml@templates
+
+  - stage: deploy
+    dependsOn: plan
+    jobs:
+      - template: deploy.yaml@templates

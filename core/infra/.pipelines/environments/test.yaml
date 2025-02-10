@@ -1,0 +1,21 @@
+variables:
+  AZURE_PROVIDERS: Microsoft.Advisor,Microsoft.AlertsManagement,Microsoft.Authorization,Microsoft.Consumption,Microsoft.EventGrid,microsoft.insights,Microsoft.ManagedIdentity,Microsoft.Management,Microsoft.Network,Microsoft.PolicyInsights,Microsoft.ResourceHealth,Microsoft.Resources,Microsoft.Security
+  AZURE_PROVIDER_WAIT_SECONDS: 10
+  AZURE_PROVIDER_WAIT_COUNT: 30
+  AZURE_SUBSCRIPTION_ID: # Azure Subscription ID
+  COST_THRESHOLD: -1
+  CURRENCY: EUR
+  ENVIRONMENT: test # development, test, acceptance, production
+  LOCATION: westeurope
+  LOG_SEVERITY: INFO
+  MANAGEMENT_GROUP:
+  RESOURCE_GROUP:
+  RULE_BASELINE: Azure.Default
+  RULE_MODULES: Az.Resources,PSRule.Rules.Azure
+  RULE_OPTION: infra/ps-rule.yaml
+  SCOPE: sub
+  SERVICE_CONNECTION: # Azure Service Connection
+  TEMPLATE: infra/main.bicep
+  TEMPLATE_PARAMETERS: infra/test.bicepparam # Path to the parameters file dev.bicepparam, tst.bicepparam, uat.bicepparam, pro.bicepparam
+  VERSION_ACE_TOOL: 1.4
+  WORKFLOW_VERSION: v1
