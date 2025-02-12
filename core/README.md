@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 **Infrastructure Bicep (Governed by AWF)**
 
 For the Infrastructure Bicep, the focus is on shared infrastructure that is governed by AWF. This could include shared networks, storage accounts, or policy enforcement. The infra is responsible for deploying resources like virtual networks (VNets), network security groups (NSGs), route tables, and governance policies (e.g., diagnostics and security settings). These shared resources are centrally managed by AWF, ensuring compliance, security, and consistency across all solutions.
@@ -14,6 +13,3 @@ For the Solution Bicep, teams have the freedom to deploy and manage their applic
 - Pipelines: The infrastructure pipeline runs first, deploying the shared resources (e.g., networks, policies). The solution pipelines depend on the outputs from this infrastructure, ensuring that the solutions are deployed securely and in compliance with organizational governance.
 
 This setup maintains governance for shared infrastructure while providing autonomy to the solution teams for managing their applications, ensuring both compliance and flexibility.
-=======
-readme
->>>>>>> a017a84d572a6d1902bad8a1347dd6c9230e18b8
