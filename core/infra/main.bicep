@@ -134,6 +134,17 @@ resource networkRG 'Microsoft.Resources/resourceGroups@2023-07-01' = {
 //     startDate: budgetSettings.startDate
 //   }
 // }
+
+module subscriptionConfiguration 'br/innofactor:avm/ptn/lz/subscription-configuration:0.1.5' = {
+  name: 'subscriptionConfigurationDeploy'
+  params: {
+    name: spokeName
+    partnerCountry: 'sweden'
+    tags: tags
+  }
+}
+
+
 module networkSecurityGroups 'br/public:avm/res/network/network-security-group:0.1.3' = [
   for nsg in nsgs: {
     name: '${nsg.name}nsgDeploy'
