@@ -1,0 +1,27 @@
+CI/CD Workflow and Variable Management for Azure DevOps
+Title:
+Manage CI/CD workflows and variable handling for different environments to ensure an efficient and secure delivery process in Azure DevOps.
+
+Description:
+To optimize my CI/CD processes, I have split the Bicep actions into three parts and extracted plan.yaml and deploy.yaml into a separate repository called ci-cd-workflows. Variables for each environment (dev, test, acceptance, prod) are organized in the .pipelines/environments folder to streamline management and reuse of variable values specific to each environment. The main pipeline in azure-pipeline.yaml has been updated to include triggers and environment-specific variables, allowing for the selection of the appropriate service connection and parameter files (e.g., dev.bicepparam) based on the active branch.
+
+Each environment includes a dedicated variable file that defines critical deployment configurations:
+
+Environment, service connection, azure subscription, and parameters are specified in environment-specific files (dev.yaml, test.yaml, acceptance.yaml, prod.yaml) placed in the .pipelines/environments folder.
+The pipeline includes an external resource that fetches plan.yaml and deploy.yaml from the ci-cd-workflows repo, with dependencies configured to require plan.yaml to pass before running deploy.yaml. This setup allows for an extra layer of security in production environments, where deployment may require additional approval.
+
+To maintain quality standards, I have also created a ValidatePullRequest.yaml pipeline to ensure that the PR flow (dev -> test -> acceptance -> prod) adheres to branch policies and is validated through Build Validation in Azure DevOps. Developers also have the option to use feature branches for PRs to the dev branch, following established branching strategies.
+
+Bicep Parameter Files for Each Environment
+To ensure consistency across environments while allowing for environment-specific configurations, each environment has a dedicated Bicep parameter file (dev.bicepparam, test.bicepparam, uat.bicepparam, prod.bicepparam). These files define the necessary parameters for deploying infrastructure resources in each specific environment. Using distinct parameter files allows fine-tuning of values such as resource names, scaling settings, and access policies for each environment, ensuring each deployment adheres to the requirements and constraints of dev, test, acceptance, or production.
+
+The pipeline dynamically selects the appropriate parameter file based on the active branch. This setup guarantees that deployments are tailored to each environment, with the correct values applied automatically, reducing manual intervention and risk of misconfiguration across different stages of the deployment pipeline.
+
+Acceptance Criteria:
+
+Bicep actions are split into three separate parts, with plan.yaml and deploy.yaml located in the ci-cd-workflows repository.
+Variable values for each environment (dev.yaml, test.yaml, prod.yaml) are correctly placed in the .pipelines/environments folder and cover key configurations, including the service connection, Azure subscription, and parameters.
+azure-pipeline.yaml is updated to automatically select the correct service connection, parameter file, and environment based on the active branch.
+Different Bicep parameter files are used (dev.bicepparam, test.bicepparam, uat.bicepparam, prod.bicepparam), each customized for the respective environment and selected dynamically based on the active branch.
+The CI/CD workflow pipeline flow from dev -> test -> acceptance -> prod uses ValidatePullRequest.yaml to review and approve PRs according to branch policies.
+Deployment to the production environment requires approval in Azure DevOps for added security.
